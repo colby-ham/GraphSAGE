@@ -26,7 +26,7 @@ cd $repo_dir
 dataset=amazon-book
 
 # Generate new GraphSAGE format files
-python convert_kgat_to_graphsage.py
+python convert_kgat_to_graphsage.py $dataset
 
 # Then generate random walks
 python graphsage/utils.py ./example_data/${dataset}-G.json ./example_data/${dataset}-walks.txt
