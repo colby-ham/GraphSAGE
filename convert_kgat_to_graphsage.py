@@ -44,6 +44,15 @@ def main():
     edges.extend(valid_edges)
     edges.extend(kg_edges)
 
+    # Get all node ids from edges
+    node_ids = set()
+    for edge in edges:
+        n1 = edge[0]
+        n2 = edge[1]
+        node_ids.add(n1)
+        node_ids.add(n2)
+    max_node_id = max(node_ids)
+    min_node_id = min(node_ids)
 
     # Read in maps
     with open(node_type_vocab_path, 'r') as f:
@@ -54,7 +63,7 @@ def main():
     for k in node_type_vocab:
         v = node_type_vocab[k]
         if v == 'item':
-            nv = [1, 0 , 0]
+            nv = [1, 0, 0]
         elif v == 'entity':
             nv = [0, 1, 0]
         else:
@@ -65,9 +74,17 @@ def main():
 
     # Transform kgat_data into networkx graph
     G = nx.from_edgelist(edges)
-    max_node_id = 129955
-    for i in range(max_node_id):
-        G.add_node(i)
+    # We don't need to hardcode max_node_id
+    all_node_ids = {i for i in range(max_node_id + 1)}
+    remaining_node_ids = all_node_ids.difference(node_ids)
+
+    #import pdb;pdb.set_trace()
+
+    #for i in range(max_node_id + 1):
+    #    G.add_node(i)
+    for node_id in remaining_node_ids:
+        G.add_node(node_id)
+
     #import pdb;pdb.set_trace()
     nx.set_node_attributes(G, 'val', False)
     nx.set_node_attributes(G, 'test', False)
