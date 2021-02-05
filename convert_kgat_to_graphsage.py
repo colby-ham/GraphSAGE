@@ -1,6 +1,9 @@
+import json
+import sys
+
 import networkx as nx
 from networkx.readwrite import json_graph
-import json
+
 
 def read_edges(path, split):
     edges = []
@@ -21,11 +24,11 @@ def read_edges(path, split):
     return edges
 
 
-def main():
+def main(dataset):
     # Load in kgat data
     data_dir = "/people/hamc649/recommendation/kgat_data"
     #data_dir = '/Users/d3m432/git/GraphSAGE/sutanay_graphsage/kgat_data'
-    dataset = 'last-fm'
+    #dataset = 'last-fm'
     dataset_dir = f"{data_dir}/{dataset}"
     output_dir = "/people/hamc649/recommendation/GraphSAGE/example_data"
     #output_dir = '/Users/d3m432/git/GraphSAGE/sutanay_graphsage/GraphSAGE/example_data'
@@ -121,4 +124,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    dataset = sys.argv[1]
+    main(dataset)
